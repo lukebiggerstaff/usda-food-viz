@@ -102,3 +102,4 @@ ENV/
 files/
 food-env/
 *.swp
+*.sqlite3

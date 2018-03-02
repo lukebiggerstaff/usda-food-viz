@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'usda.urls'
+ROOT_URLCONF = 'foodviz.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'usda.wsgi.application'
+WSGI_APPLICATION = 'foodviz.wsgi.application'
 
 
 # Database
