@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'search',
     'rest_framework',
+    'webpack_loader',
 ]
 
 MIDDLEWARE = [
