@@ -10,5 +10,5 @@ router.register(r'search', views.SearchViewSet, "food-list")
 router.register(r'food', views.FoodViewSet, "food-detail")
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]
