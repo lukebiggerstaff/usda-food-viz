@@ -1,0 +1,7 @@
+<form action="/search" method="get">
+  {{ form.as_p}} 
+  <button id="id_submit">Submit</button>
+</form>
+{% for food in object_list%}
+<p> {{ food.description }} </p>
+{% endfor %}
