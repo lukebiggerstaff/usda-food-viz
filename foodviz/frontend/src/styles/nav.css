@@ -1,0 +1,15 @@
+.navbar {
+  padding: 40px;
+  margin-bottom: 60px;
+  border: 1px solid black;
+}
+.navbar-brand {
+  padding: 20px;
+  margin-bottom: -70px;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-family: 'Lobster',  cursive;
+  font-weight: bold;
+  font-size: 2em;
+  letter-spacing: .1em;
+}
