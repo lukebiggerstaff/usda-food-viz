@@ -1,6 +1,6 @@
 import React, { Component  } from 'react';
 import Nav from './Nav.js';
-import SearchBar from './SearchBar.js';
+import Search from './Search.js';
 import { Container } from 'reactstrap';
 
 class App extends Component {
@@ -9,7 +9,7 @@ class App extends Component {
       <div>
         <Nav />
         <Container>
-          <SearchBar />
+          <Search />
         </Container>
       </div>
     );
