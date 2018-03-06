@@ -1,0 +1,13 @@
+.result-item {
+  list-style: none;
+}
+
+.result-item--name {
+  display: flex;
+  justify-content:center;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.result-item--chart {
+}
