@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navbar, NavbarBrand} from 'reactstrap';
-import '../styles/nav.css';
+import '../styles/Nav.css';
 
 const Nav = () => {
   return (
