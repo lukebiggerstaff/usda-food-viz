@@ -25,7 +25,8 @@ class Search extends Component {
   }
 
   updateSearchData(term){
-    if (term.length < 4){
+    if (term.length < 3){
+      if (this.timeout) clearTimeout(this.timeout);
       this.setState({
         searchData: null,
       });
@@ -40,7 +41,7 @@ class Search extends Component {
           searchData: data.slice(0, 20),
         })
       );
-    }, 400);
+    }, 300);
   }
 
   render() {
