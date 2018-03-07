@@ -1,7 +1,8 @@
 import React from 'react';
 import ItemDetailCharts from './ItemDetailCharts';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { VictoryChart, VictoryBar } from 'victory';
+import { VictoryChart, VictoryBar,
+         VictoryAxis } from 'victory';
 import '../styles/SearchItemChart.css';
 
 class SearchItemChart extends React.Component {
@@ -41,8 +42,17 @@ class SearchItemChart extends React.Component {
         className="modal-button">
         <VictoryChart
          domainPadding={20}>
+         <VictoryAxis 
+           dependentAxis
+           label="g per 100g"
+           style={{
+             axisLabel: { padding: 35 }
+           }}
+         />
+         <VictoryAxis />
          <VictoryBar 
            data={this.makeData()}
+           style={{data: {fill: "tomato"}}}
          />
         </VictoryChart>
         <Modal isOpen={this.state.modal}>
