@@ -1,6 +1,7 @@
 import React from 'react';
 import { VictoryBar, VictoryChart,
-         VictoryPie, VictoryScatter, VictoryTheme } from 'victory';
+  VictoryScatter,VictoryTheme,
+  VictoryAxis } from 'victory';
 
 function makeVitaminData(props) {
   const vitaminData = [];
@@ -16,7 +17,7 @@ function makekCalData(props) {
   const protein = props.data["protein"];
   const carbs = props.data["carbohydrates"];
   const fat = props.data["fat"];
-  const totalGrams = (protein + carbs + fat) / 3;
+  const totalGrams = protein + carbs + fat;
   const totalkCal = props.data["kcal"];
   kcalData.push({x: "protein", y : Math.floor((protein / totalGrams) * totalkCal)  });
   kcalData.push({x: "carbs", y : Math.floor((carbs / totalGrams) * totalkCal)});
@@ -44,13 +45,34 @@ function makeMineralData(props) {
 function ItemDetailCharts (props) {
   return (
     <div>
-      <VictoryPie theme={VictoryTheme.material}
-        data={makekCalData(props)} />
+      <VictoryChart
+        domainPadding={30}
+        theme={VictoryTheme.material}
+      >
+        <VictoryAxis 
+          dependentAxis
+          label="kCal per 100g"
+          style={{
+            axisLabel: {padding: 35}
+          }}
+        />
+        <VictoryAxis />
+        <VictoryBar 
+          data={makekCalData(props)} />
+      </VictoryChart>
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryBar data={makeVitaminData(props)} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryScatter data={makeMineralData(props)}></VictoryScatter>
+        <VictoryAxis 
+          dependentAxis
+          label="mcg per 100g"
+          style={{
+            axisLabel : {padding: 35}
+          }}
+        />
+        <VictoryAxis />
       </VictoryChart>
     </div>
   );
