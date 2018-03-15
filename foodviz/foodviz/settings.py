@@ -1,10 +1,53 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = 'fr_316zg=)r6s3o+1k#+ys#zs6pivk$@fbhc73l$nc8_6jd$=('
-DEBUG = True
-ALLOWED_HOSTS = []
-WSGI_APPLICATION = 'foodviz.wsgi.application'
+
+Environment = {
+    'DJANGO_DEBUG' : bool(int(os.environ.get("DJANGO_DEBUG"))),
+    'DJANGO_SECRET' : os.environ.get("DJANGO_SECRET"),
+    'DJANGO_DB_NAME' : os.environ.get("DJANGO_DB_NAME"),
+    'DJANGO_DB_USER' : os.environ.get("DJANGO_DB_USER"),
+    'DJANGO_DB_PASSWORD' : os.environ.get("DJANGO_DB_PASSWORD"),
+    'DJANGO_DB_HOST' : os.environ.get("DJANGO_DB_HOST"),
+    'DJANGO_DB_PORT' : os.environ.get("DJANGO_DB_PORT"),
+    'DJANGO_SITENAME' : os.environ.get("DJANGO_SITENAME"),
+}
+
+
+DEBUG = Environment["DJANGO_DEBUG"]
+
+SECRET_KEY = Environment["DJANGO_SECRET"]
+
+ALLOWED_HOSTS = ["*" if Environment["DJANGO_DEBUG"] else Environment["DJANGO_SITENAME"]]
+
+DATABASES = {
+    'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': Environment['DJANGO_DB_NAME'],
+                'USER': Environment['DJANGO_DB_USER'],
+                'PASSWORD': Environment['DJANGO_DB_PASSWORD'],
+                'HOST': Environment['DJANGO_DB_HOST'],
+                'PORT': Environment['DJANGO_DB_PORT'],
+    }
+}
+
+# webpack settings
+WEBPACK_DEV = os.path.join(BASE_DIR, 'webpack-stats.dev.json')
+WEBPACK_PROD = os.path.join(BASE_DIR, 'webpack-stats.prod.json')
+
+WEBPACK_LOADER = {
+    'DEFAULT' : {
+        'BUNDLE_DIR_NAME' : 'bundles/',
+        'STATS_FILE' : WEBPACK_DEV if DEBUG else WEBPACK_PROD,
+    }
+}
+
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'assets'),
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,6 +60,24 @@ INSTALLED_APPS = [
     'rest_framework',
     'webpack_loader',
 ]
+
+# Configure streaming logging
+LOGGING = {
+        'version': 1,
+    'handlers': {
+        'console' : {
+            'class' : 'logging.StreamHandler',
+        },
+    },
+    'loggers' : {
+        'django' : {
+            'handlers' : ['console'],
+            'level' : os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,13 +108,6 @@ TEMPLATES = [
 ]
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -75,12 +129,4 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-STATIC_URL = '/static/'
 
-# begin webpack settings
-WEBPACK_LOADER = {
-    'DEFAULT' : {
-        'BUNDLE_DIR_NAME' : 'bundles/',
-        'STATS_FILE' : os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
-    }
-}
